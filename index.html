@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster | Clean & Modern Quiz App</title>
+    <meta name="description" content="A premium, modern quiz application built with Vanilla JS.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter for clean, modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Header / Nav -->
+        <header class="app-header">
+            <div class="logo">QuizMaster</div>
+            <div class="header-controls">
+                <button id="sound-toggle" class="icon-btn" aria-label="Toggle Sound">
+                    <svg class="icon sound-on" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z">
+                        </path>
+                    </svg>
+                    <svg class="icon sound-off hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z m9.9 2.121l-4.242-4.242m0 4.242l4.242-4.242">
+                        </path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <svg class="icon moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                        </path>
+                    </svg>
+                    <svg class="icon sun-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- SCREEN 1: START SCREEN -->
+            <section id="start-screen" class="screen active-screen">
+                <div class="glass-card start-card">
+                    <h1 class="hero-title">Test Your Knowledge</h1>
+                    <p class="hero-subtitle">Select your preferences and start the challenge.</p>
+
+                    <form id="start-form">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <div class="select-wrapper">
+                                <select id="category" required>
+                                    <option value="any">Any Category</option>
+                                    <option value="9">General Knowledge</option>
+                                    <option value="18">Science: Computers</option>
+                                    <option value="21">Sports</option>
+                                    <option value="23">History</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty</label>
+                            <div class="select-wrapper">
+                                <select id="difficulty" required>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Start Quiz</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- SCREEN 2: QUIZ SCREEN -->
+            <section id="quiz-screen" class="screen hidden">
+                <div class="glass-card quiz-card">
+                    <div class="quiz-header">
+                        <div class="progress-info">
+                            <span id="question-count">Question 1/10</span>
+                            <span id="score-display">Score: 0</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="progress-bar" class="progress-bar"></div>
+                        </div>
+                        <div class="timer-container">
+                            <svg class="timer-svg" viewBox="0 0 100 100">
+                                <circle class="timer-circle-bg" cx="50" cy="50" r="45"></circle>
+                                <circle id="timer-circle" class="timer-circle-fg" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="timer-text">
+                                <span id="">15</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-container">
+                        <h2 id="question-text" class="question-text">Loading question...</h2>
+                    </div>
+
+                    <div id="options-container" class="options-grid">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <div class="quiz-footer">
+                        <button id="next-btn" class="btn btn-secondary hidden">Next Question</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCREEN 3: RESULTS SCREEN -->
+            <section id="result-screen" class="screen hidden">
+                <div class="glass-card result-card">
+                    <div class="result-header">
+                        <h2 class="result-title">Quiz Completed!</h2>
+                        <div id="score-circle" class="score-circle">
+                            <span id="final-score">0</span>
+                            <span class="total-score">/ 10</span>
+                        </div>
+                        <p id="performance-msg" class="performance-msg">Nice try!</p>
+                        <p id="highscore-msg" class="highscore-msg hidden">🏆 New High Score!</p>
+                    </div>
+
+                    <div class="result-actions">
+                        <button id="review-btn" class="btn btn-secondary">Review Answers</button>
+                        <button id="restart-btn" class="btn btn-primary">Play Again</button>
+                        <button id="home-btn" class="btn btn-secondary-outline">Home</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCREEN 4: REVIEW SCREEN -->
+            <section id="review-screen" class="screen hidden">
+                <div class="glass-card review-card">
+                    <h2 class="result-title">Review Answers</h2>
+                    <div id="review-container" class="review-container">
+                        <!-- Review items injected here -->
+                    </div>
+                    <div class="review-footer">
+                        <button id="back-to-result-btn" class="btn btn-primary">Back to Results</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Canvas for Confetti -->
+        <canvas id="confetti-canvas"></canvas>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
